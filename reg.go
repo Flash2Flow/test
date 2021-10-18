@@ -10,7 +10,7 @@ import (
 	"github.com/go-session/session"
 )
 
-func auth(page http.ResponseWriter, req *http.Request) {
+func reg(page http.ResponseWriter, req *http.Request) {
 	login := req.FormValue("login")
 	password := req.FormValue("password")
 

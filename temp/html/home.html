@@ -28,70 +28,6 @@
 
     </div>
 </div>
-
-
-<!--Register-->
-<form action="/reg">
-
-    <div class="block_one" id="block_one">
-        <h1 class="info_register">Registration_::</h1>
-
-        <h1 class="info_two">If you registration,<br>u accept our rules,<br>and require your<br> personal information<br> to our system.</h1>
-
-        <div class="input_login">
-            <h1 class="point_login">:login</h1>
-            <input type="text" placeholder=":input login" name="login">
-        </div>
-
-        <div class="input_email">
-            <h1 class="point_email">:email</h1>
-            <input type="email" placeholder=":input email" name="email">
-        </div>
-
-        <div class="input_password">
-            <h1 class="point_password">:password</h1>
-            <input type="password" placeholder=":input password" name="password">
-        </div>
-
-        <div class="input_repassword">
-            <h1 class="point_repassword">:repeat password</h1>
-            <input type="password" placeholder=":input repassword" name="repassword">
-        </div>
-
-        <a href="#" class="have_account" id="link_auth">Have an account?</a>
-
-        <button class="bn36378">Submit</button>
-    </div>
-
-</form>
-<!--End registration-->
-
-<!--Join-->
-<form action="/auth">
-    <div class="block_two" id="block_two">
-        <h1 class="info_join">Log in_::</h1>
-
-        <div class="input_account">
-            <h1 class="point_account">:account</h1>
-            <input type="text" placeholder=":input account" name="login">
-        </div>
-
-        <div class="input_passwordd">
-            <h1 class="point_passwordd">:password</h1>
-            <input type="password" placeholder=":input password" name="password">
-        </div>
-
-        <a href="#block_one" class="dont_account" id="link_reg">Don't have an account?</a>
-
-        <button class="bn3637">Submit</button>
-    </div>
-</form>
-
-<script src="\static\js\typeit"></script>
-<script src="\static\js\jquery"></script>
-
-
-
 {{ if . }}
 <div class="nav_menu">
     <!--Вызов меню play-->
@@ -260,6 +196,71 @@
     </div>
 </div>
 <!--End join-->
+{{ else }}
+
+
+<!--Register-->
+<form action="/reg">
+
+    <div class="block_one" id="block_one">
+        <h1 class="info_register">Registration_::</h1>
+
+        <h1 class="info_two">If you registration,<br>u accept our rules,<br>and require your<br> personal information<br> to our system.</h1>
+
+        <div class="input_login">
+            <h1 class="point_login">:login</h1>
+            <input type="text" placeholder=":input login" name="login">
+        </div>
+
+        <div class="input_email">
+            <h1 class="point_email">:email</h1>
+            <input type="email" placeholder=":input email" name="email">
+        </div>
+
+        <div class="input_password">
+            <h1 class="point_password">:password</h1>
+            <input type="password" placeholder=":input password" name="password">
+        </div>
+
+        <div class="input_repassword">
+            <h1 class="point_repassword">:repeat password</h1>
+            <input type="password" placeholder=":input repassword" name="repassword">
+        </div>
+
+        <a href="#" class="have_account" id="link_auth">Have an account?</a>
+
+        <button class="bn36378">Submit</button>
+    </div>
+
+</form>
+<!--End registration-->
+
+<!--Join-->
+<form action="/auth">
+    <div class="block_two" id="block_two">
+        <h1 class="info_join">Log in_::</h1>
+
+        <div class="input_account">
+            <h1 class="point_account">:account</h1>
+            <input type="text" placeholder=":input account" name="login">
+        </div>
+
+        <div class="input_passwordd">
+            <h1 class="point_passwordd">:password</h1>
+            <input type="password" placeholder=":input password" name="password">
+        </div>
+
+        <a href="#block_one" class="dont_account" id="link_reg">Don't have an account?</a>
+
+        <button class="bn3637">Submit</button>
+    </div>
+</form>
+
+<script src="\static\js\typeit"></script>
+<script src="\static\js\jquery"></script>
+
+
+
 {{end }}
 </body>
 </html>

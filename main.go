@@ -43,6 +43,7 @@ func home(page http.ResponseWriter, req *http.Request) {
 	active, ok := store.Get("active_login")
 	if ok {
 		fmt.Fprintf(page, "Nice session %s", active)
+		fmt.Fprintf(page, "Gay")
 	}else{
 		fmt.Fprintf(page, "Error session" )
 	}

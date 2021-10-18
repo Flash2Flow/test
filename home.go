@@ -15,7 +15,7 @@ import (
 )
 
 func home(page http.ResponseWriter, req *http.Request) {
-	temp, err := template.ParseFiles("/temp/html/home.html")
+	temp, err := template.ParseFiles("temp/html/home.html")
 
 	if err != nil {
 		fmt.Fprintf(page, err.Error())

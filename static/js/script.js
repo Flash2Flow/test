@@ -108,11 +108,10 @@ $('#btn_five').on('click',() => {
 });
 
 
-var element = document.querySelector('.container');
 window.addEventListener('mousemove', function(e) {
       var x = e.clientX / window.innerWidth;
       var y = e.clientY / window.innerHeight;
-      element.style.transform = 'translate(-' + x * 100 + 'px, -' + y * 100 + 'px)';
+      $("#container").css('transform', 'translate(-' + x * 100 + 'px, -' + y * 100 + 'px)');
 });
 }
 });

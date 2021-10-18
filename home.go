@@ -2,10 +2,7 @@ package main
 
 import (
 	"context"
-
 	"html/template"
-
-	"log"
 
 	"fmt"
 
@@ -15,27 +12,30 @@ import (
 )
 
 func home(page http.ResponseWriter, req *http.Request) {
-	temp, err := template.ParseFiles("temp/html/home.html")
-
-	if err != nil {
-		fmt.Fprintf(page, err.Error())
-	}
-
-	temp.ExecuteTemplate(page, "home_page", nil)
-
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {
 		fmt.Fprint(page, err)
 		return
 	}
 
-
 	active, ok := store.Get("active_login")
 
 	if ok {
-		ActiveLog := fmt.Sprintf("User active: %v", active)
-		log.Println(ActiveLog)
-		return
+		temp, err := template.ParseFiles("/temp/html/HomeBadAuth.html")
+
+		if err != nil {
+			fmt.Fprintf(page, err.Error())
+		}
+
+		temp.ExecuteTemplate(page, "home_page_nice", active)
+	}else{
+		temp, err := template.ParseFiles("/temp/html/HomeNiceAuth.html")
+
+		if err != nil {
+			fmt.Fprintf(page, err.Error())
+		}
+
+		temp.ExecuteTemplate(page, "home_page_bad", nil)
 	}
 
 }

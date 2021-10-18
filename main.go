@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+
 )
 
 
@@ -20,6 +21,7 @@ func server()  {
 	http.HandleFunc("/auth", auth)
 	http.HandleFunc("/reg", reg)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
+	
 
 	//server methods
 	port := os.Getenv("PORT")

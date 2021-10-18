@@ -1,3 +1,5 @@
+console.log("js loaded")
+
 $(window).on('load', function () {
   $('#load').delay(17500).fadeOut('slow');
 

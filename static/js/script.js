@@ -8,7 +8,7 @@ $(window).on('load', function () {
     speed: 50,
     autoStart: false
   });
-  $('#block_two').show().delay(17550);
+  $('#block_two').delay(17550).show();
 });
 
 

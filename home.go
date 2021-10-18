@@ -32,6 +32,7 @@ func home(page http.ResponseWriter, req *http.Request) {
 	Active := fmt.Sprintf("User logged: %v", active)
 	log.Println(Active)
 	fmt.Fprintf(page, Active)
+		temp.ExecuteTemplate(page, "home_page", active)
 	}
 
 }

@@ -1029,6 +1029,8 @@ left: 750px;
     -webkit-animation: center 1s;
 }
 .block_two {
+    display: none;
+
     position: absolute;
     width: 418px;
     height: 207px;

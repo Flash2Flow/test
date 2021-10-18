@@ -8,10 +8,7 @@ $(window).on('load', function () {
     speed: 50,
     autoStart: false
   });
-
-  $('#link_reg').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
-    $('#block_one').show();//включает/выключает элемент id="text"
-    $('#block_two').hide();
+  $('#block_two').show();
 });
 
 
@@ -118,6 +115,12 @@ window.addEventListener('mousemove', function(e) {
       $("#container").css('transform', 'translate(-' + x * 100 + 'px, -' + y * 100 + 'px)');
 });
 }
+});
+
+$(document).ready(function(){ //дожидаемся загрузки страницы
+ $('#link_reg').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
+ $('#block_one').show();//включает/выключает элемент id="text"
+ $('#block_two').hide();
 });
 
 $('#link_auth').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"

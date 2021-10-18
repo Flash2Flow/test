@@ -28,8 +28,10 @@ func auth(page http.ResponseWriter, req *http.Request) {
 			http.Redirect(page, req, "/", 302)
 		}else{
 			fmt.Fprintf(page, "Err password")
+			http.Redirect(page, req, "/", 302)
 		}
 	}else{
 		fmt.Fprintf(page, "Err login")
+		http.Redirect(page, req, "/", 302)
 	}
 }

@@ -17,7 +17,6 @@ func home(page http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(page, err)
 		return
 	}
-
 	temp, err := template.ParseFiles("temp/html/home.html", "static/js/script.js")
 
 	if err != nil {

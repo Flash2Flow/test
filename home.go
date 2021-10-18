@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+
 	"html/template"
+
 	"log"
 
 	"fmt"
@@ -13,12 +15,6 @@ import (
 )
 
 func home(page http.ResponseWriter, req *http.Request) {
-	store, err := session.Start(context.Background(), page, req)
-	if err != nil {
-		fmt.Fprint(page, err)
-		return
-	}
-
 	temp, err := template.ParseFiles("/temp/html/home.html")
 
 	if err != nil {
@@ -26,6 +22,13 @@ func home(page http.ResponseWriter, req *http.Request) {
 	}
 
 	temp.ExecuteTemplate(page, "home_page", nil)
+
+	store, err := session.Start(context.Background(), page, req)
+	if err != nil {
+		fmt.Fprint(page, err)
+		return
+	}
+
 
 	active, ok := store.Get("active_login")
 

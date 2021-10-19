@@ -12,10 +12,8 @@ $(window).on('load', function () {
 });
 
 
-$( document ).keyup(function() {
-
-  var e = $.Event('keypress');
-  if ( e.which == 36) {
+document.addEventListener('keyup', function(){
+if (event.keyCode == 36){
 $("#container").stop().toggle();
 $('#btn_one').on('click',() => {
   $('#panelo').stop().toggle();

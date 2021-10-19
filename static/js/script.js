@@ -15,8 +15,7 @@ $(window).on('load', function () {
 
 document.addEventListener('keyup', function(){
 if (event.keyCode == 36){
-  console.log("Print case")
-$( "#container" ).stop().toggle();
+$("#container").stop().toggle();
 $('#btn_one').on('click',() => {
   $('#panelo').stop().toggle();
   $('#panelt').stop().toggle();

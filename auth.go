@@ -40,6 +40,8 @@ func auth(page http.ResponseWriter, req *http.Request) {
 	if ok {
 		Active := fmt.Sprintf("User logged: %v", active)
 		log.Println(Active)
+		http.Redirect(page, req, "/home/", 302)
+	}else{
 		http.Redirect(page, req, "/", 302)
 	}
 

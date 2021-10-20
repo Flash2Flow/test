@@ -39,20 +39,25 @@ func reg(page http.ResponseWriter, req *http.Request) {
 	if ok {
 		Active := fmt.Sprintf("User logged: %v", active)
 		log.Println(Active)
+		http.Redirect(page, req, "/home/", 302)
+	}else{
 		http.Redirect(page, req, "/", 302)
 	}
 
 
 		if login == ""{
 			fmt.Fprintf(page, "Login cant be nil")
+			log.Println("err 1")
 			http.Redirect(page, req, "/", 302)
 		}else{
 			if email == "" {
 				fmt.Fprintf(page, "Email cant be nil")
+				log.Println("err 2")
 				http.Redirect(page, req, "/", 302)
 			}else{
 				if password == ""{
 					fmt.Fprintf(page, "Password cant be nil")
+					log.Println("err 3")
 					http.Redirect(page, req, "/", 302)
 				}else{
 					//reg
@@ -108,17 +113,21 @@ func reg(page http.ResponseWriter, req *http.Request) {
 
 								}else{
 									fmt.Fprintf(page, "Пользователь с такой почтой уже есть.")
+									log.Println("err 4")
 									http.Redirect(page, req, "/", 302)
 								}
 							}
 							spew.Dump(row)
+							log.Println("err 5")
 							log.Println(err)
 						}else{
 							fmt.Fprintf(page, "Пользователь с таким логином уже есть.")
+							log.Println("err 6")
 							http.Redirect(page, req, "/", 302)
 						}
 
 					}
+					log.Println("err 7")
 					log.Println(err)
 				}
 			}

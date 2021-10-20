@@ -95,6 +95,8 @@ func reg(page http.ResponseWriter, req *http.Request) {
 
 									res, err := db.Exec("INSERT INTO `users` (`login`, `password`, `userkey`, `ban`, `group`, `developer`, `undesirable`) VALUES(?, ?, ?, ?, ?, ?, ?)", login, md5_password, md5_userkey, null, null, null, null)
 									if err != nil {
+										log.Println("err 1111")
+										log.Println(err)
 
 									}
 									log.Println("Create user login: " + login + " | password: "+ password + " | email :" + email)

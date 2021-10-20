@@ -21,15 +21,6 @@
 
 <script lang="JavaScript">
     $(window).on('load', function () {
-        $('#link_reg').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
-            $('#block_one').show();//включает/выключает элемент id="text"
-            $('#block_two').hide();
-        });
-
-        $('#link_auth').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
-            $('#block_one').hide();//включает/выключает элемент id="text"
-            $('#block_two').show();
-        });
 
         $('#load').delay(17500).fadeOut('slow');
         $('#block_two').delay(17600).show(0);
@@ -44,50 +35,6 @@
 </script>
 
 <body>
-<div id="load" class="load">
-    <div class="intro">
-
-
-        <p id="example3"></p>
-
-    </div>
-</div>
-
-
-<!--Register-->
-<form action="/reg">
-
-    <div class="block_one" id="block_one">
-        <h1 class="info_register">Registration_::</h1>
-
-        <h1 class="info_two">If you registration,<br>u accept our rules,<br>and require your<br> personal information<br> to our system.</h1>
-
-        <div class="input_login">
-            <h1 class="point_login">:login</h1>
-            <input type="text" placeholder=":input login" name="login">
-        </div>
-
-        <div class="input_email">
-            <h1 class="point_email">:email</h1>
-            <input type="email" placeholder=":input email" name="email">
-        </div>
-
-        <div class="input_password">
-            <h1 class="point_password">:password</h1>
-            <input type="password" placeholder=":input password" name="password">
-        </div>
-
-        <div class="input_repassword">
-            <h1 class="point_repassword">:repeat password</h1>
-            <input type="password" placeholder=":input repassword" name="repassword">
-        </div>
-
-        <a href="#" class="have_account" id="link_auth">Have an account?</a>
-
-        <button class="bn36378">Submit</button>
-    </div>
-
-</form>
 
 <!--Join-->
 <form action="/auth">
@@ -104,7 +51,7 @@
             <input type="password" placeholder=":input passwordd" name="password">
         </div>
 
-        <a href="#block_one" class="dont_account" id="link_reg">Don't have an account?</a>
+        <a href="/reg" class="dont_account" id="link_reg">Don't have an account?</a>
 
         <button class="bn3637">Submit</button>
     </div>

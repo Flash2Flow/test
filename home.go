@@ -13,17 +13,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type UserFull struct {
-	Id 				  int
-	Login   		  string
-	Password 		  string
-	Developer   	  int
-	Ban				  int
-	Group       	[]int
-	Undesirable 	  int
-	UserKey			  int
-}
-
 func home(page http.ResponseWriter, req *http.Request) {
 
 	store, err := session.Start(context.Background(), page, req)

@@ -2,37 +2,48 @@ package main
 
 import (
 	"context"
-	"database/sql"
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"math/rand"
-
 	"net/http"
+	"os"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/go-session/session"
-	_ "github.com/go-sql-driver/mysql"
 )
 
+type UserFull struct {
+	Login   		  string
+	Email 			  string
+	Password 		  string
+	Developer   	  int
+	Ban				  int
+	Group       	  int
+	Undesirable 	  int
+	UserKey			  int
+}
+
 func reg(page http.ResponseWriter, req *http.Request) {
+
 	login := req.FormValue("login")
 	email := req.FormValue("email")
 	password := req.FormValue("password")
-
+	repassword := req.FormValue("repassword")
 
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {
 		fmt.Fprint(page, err)
 		return
 	}
-	temp, err := template.ParseFiles("temp/html/home.html", "static/js/script.js")
+	temp, err := template.ParseFiles("temp/html/home_reg.html", "static/js/script.js")
 
 	if err != nil {
 		fmt.Fprintf(page, err.Error())
 	}
 
-	temp.ExecuteTemplate(page, "home_page", nil)
+	temp.ExecuteTemplate(page, "home_page_reg", nil)
 
 	active, ok := store.Get("active_login")
 
@@ -44,98 +55,61 @@ func reg(page http.ResponseWriter, req *http.Request) {
 		http.Redirect(page, req, "/", 302)
 	}
 
-
-		if login == ""{
-			fmt.Fprintf(page, "Login cant be nil")
-			log.Println("err 1")
-			http.Redirect(page, req, "/", 302)
+	if login == "" {
+		fmt.Fprintf(page, "Login cant be nil")
+	}else{
+		if email == ""{
+			fmt.Fprintf(page, "Email cant be nil")
 		}else{
-			if email == "" {
-				fmt.Fprintf(page, "Email cant be nil")
-				log.Println("err 2")
-				http.Redirect(page, req, "/", 302)
+			if password == "" {
+				fmt.Fprintf(page, "Password cant be nil")
 			}else{
-				if password == ""{
-					fmt.Fprintf(page, "Password cant be nil")
-					log.Println("err 3")
-					http.Redirect(page, req, "/", 302)
+				if password != repassword {
+					fmt.Fprintf(page, "Password != repassword")
 				}else{
+					users := fmt.Sprintf("/users/user_%s.json", login)
+					f, err := os.Create(users)
+					if err != nil {
+						panic(err)
+					}
+					f.Close()
+
+					md5_userkey := rand.Intn(9999999999)
+
+					md5_password := GetMD5Hash(password)
 					//reg
-
-					db, err := sql.Open("mysql", "site:xLb43XEDkr8R4O@tcp(185.219.40.250)/site")
-
-
+					c := UserFull{
+						Login: login,
+						Password: md5_password,
+						Email: email,
+						Developer: 0,
+						Ban: 0,
+						Group: 0,
+						Undesirable: 0,
+						UserKey: md5_userkey,
+					}
+					dat, err := json.Marshal(c)
 					if err != nil {
-						panic(err.Error())
+						return
+					}
+					users_read := fmt.Sprintf("/users/user_%s.json", login)
+					err = ioutil.WriteFile(users_read, dat, 0644)
+					if err != nil {
+						return
 					}
 
-
-					defer db.Close()
-
-					query := fmt.Sprintf("SELECT * FROM `users` WHERE `login` = ?")
-					row, err := db.Query(query, login)
+					store.Set("active_login", login)
+					err = store.Save()
 					if err != nil {
-						if err == sql.ErrNoRows {
-							query_email := fmt.Sprintf("SELECT * FROM `users` WHERE `email` = ?")
-							_, err := db.Query(query_email, email)
-
-							if err != nil {
-								if err == sql.ErrNoRows{
-									db, err := sql.Open("mysql", "site:xLb43XEDkr8R4O@tcp(185.219.40.250)/site")
-
-
-									if err != nil {
-										panic(err.Error())
-									}
-
-									md5_userkey := rand.Intn(9999999999)
-
-									md5_password := GetMD5Hash(password)
-									var null = "0"
-
-									res, err := db.Exec("INSERT INTO `users` (`login`, `password`, `userkey`, `ban`, `group`, `developer`, `undesirable`) VALUES(?, ?, ?, ?, ?, ?, ?)", login, md5_password, md5_userkey, null, null, null, null)
-									if err != nil {
-										log.Println("err 1111")
-										log.Println(err)
-
-									}
-									log.Println("Create user login: " + login + " | password: "+ password + " | email :" + email)
-									spew.Dump(res)
-
-									store.Set("active_login", login)
-									err = store.Save()
-									if err != nil {
-										fmt.Fprint(page, err)
-										return
-									}
-									http.Redirect(page, req, "/home/", 302)
-									auth := fmt.Sprintf("User auth: %s", login)
-									log.Println(auth)
-
-
-								}else{
-									fmt.Fprintf(page, "Пользователь с такой почтой уже есть.")
-									log.Println("err 4")
-									http.Redirect(page, req, "/", 302)
-								}
-							}
-							spew.Dump(row)
-							log.Println("err 5")
-							log.Println(err)
-						}else{
-							fmt.Fprintf(page, "Пользователь с таким логином уже есть.")
-							log.Println("err 6")
-							http.Redirect(page, req, "/", 302)
-						}
-
+						fmt.Fprint(page, err)
+						return
 					}
-					log.Println("err 7")
-					log.Println(err)
-					spew.Dump(err)
-					spew.Dump(row.Columns())
+					http.Redirect(page, req, "/home/", 302)
+					auth := fmt.Sprintf("User auth: %s", login)
+					log.Println(auth)
 				}
 			}
 		}
-
+	}
 
 }

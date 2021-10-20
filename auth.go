@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
-	"database/sql"
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 
 
@@ -18,7 +19,6 @@ import (
 func auth(page http.ResponseWriter, req *http.Request) {
 
 	login := req.FormValue("login")
-
 	password := req.FormValue("password")
 
 
@@ -45,60 +45,37 @@ func auth(page http.ResponseWriter, req *http.Request) {
 		http.Redirect(page, req, "/", 302)
 	}
 
-
-		if login == ""{
-			fmt.Fprintf(page, "Login cant be nil")
-			http.Redirect(page, req, "/", 302)
+	if login == "" {
+	fmt.Fprintf(page, "Login cant be nil")
+	}else{
+		if password == "" {
+			fmt.Fprintf(page, "Password cant be nil")
 		}else{
-			if password == ""{
-				fmt.Fprintf(page, "Password cant be nil")
-				http.Redirect(page, req, "/", 302)
-			}else{
-				//auth
-				db, err := sql.Open("mysql", "site:xLb43XEDkr8R4O@tcp(185.219.40.250)/site")
-
-
-				if err != nil {
-					panic(err.Error())
-				}
-
-
-				defer db.Close()
-
-				query := fmt.Sprintf("SELECT * FROM `users` WHERE `login` = ?")
-				rows, err := db.Query(query, login)
-				if err != nil {
-					if err == sql.ErrNoRows{
-						fmt.Fprintf(page, "Такого пользователя не существует.")
-						http.Redirect(page, req, "/", 302)
-					}else{
-						log.Println(err)
-					}
-				}
-				defer rows.Close()
-
-				for rows.Next() {
-					var user UserFull
-					err = rows.Scan(user.Id, user.Login, user.Password, user.Developer, user.Group, user.Ban, user.Undesirable)
-					if err != nil {
-						log.Println(err)
-					}
-
-					if password == user.Password {
-
-						store.Set("active_login", login)
-						err = store.Save()
-						if err != nil {
-							fmt.Fprint(page, err)
-							return
-						}
-						http.Redirect(page, req, "/home/", 302)
-						auth := fmt.Sprintf("User auth: %s", login)
-						log.Println(auth)
-					}
-				}
+			md5_password := GetMD5Hash(password)
+			users := fmt.Sprintf("/users/user_%s.json", login)
+			dat, err := ioutil.ReadFile(users)
+			if err != nil {
+				fmt.Fprintf(page, "Ошибка авторизации, такого пользователя не существует.")
 			}
+			user := UserFull{}
+			err = json.Unmarshal(dat, &user)
+			if err != nil {
+				return
+			}
+			if user.Password == md5_password {
+				store.Set("active_login", login)
+				err = store.Save()
+				if err != nil {
+					fmt.Fprint(page, err)
+					return
+				}
+				http.Redirect(page, req, "/home/", 302)
+				auth := fmt.Sprintf("User auth: %s", login)
+				log.Println(auth)
+			}
+
 		}
+	}
 
 
 }

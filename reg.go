@@ -129,6 +129,7 @@ func reg(page http.ResponseWriter, req *http.Request) {
 					}
 					log.Println("err 7")
 					log.Println(err)
+					spew.Dump(err)
 				}
 			}
 		}

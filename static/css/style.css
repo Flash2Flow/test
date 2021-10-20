@@ -1066,6 +1066,10 @@ border-radius: 8px;
 transition: 0.3s;
 }
 
+::-webkit-scrollbar {
+  width: 0;
+}
+
 .bn36378:hover{
   color: white;
     	background-color: rgba(124, 158, 217);

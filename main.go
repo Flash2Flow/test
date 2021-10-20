@@ -19,8 +19,6 @@ func server()  {
 	http.HandleFunc("/home/", home_active)
 
 	//tech pages
-	http.HandleFunc("/auth", auth)
-	http.HandleFunc("/reg", reg)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 
 

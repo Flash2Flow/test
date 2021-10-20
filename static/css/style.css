@@ -751,6 +751,7 @@ a{
 
 
 .NickName{
+  text-align: center;
   font-size: 15px;
 font-family: 'Roboto', sans-serif;
 color: black;

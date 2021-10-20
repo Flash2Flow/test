@@ -16,6 +16,7 @@ func main() {
 func server()  {
 	//design pages
 	http.HandleFunc("/", home)
+	http.HandleFunc("/home/", home_active)
 
 	//tech pages
 	http.HandleFunc("/auth", auth)

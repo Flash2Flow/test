@@ -2,6 +2,9 @@ module test
 
 go 1.17
 
-require github.com/go-session/session v3.1.2+incompatible
+require (
+	github.com/davecgh/go-spew v1.1.1
+	github.com/go-session/session v3.1.2+incompatible
+)
 
 require github.com/smartystreets/goconvey v1.6.6 // indirect
